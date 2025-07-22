@@ -113,6 +113,8 @@ async function loginUser(req, res) {
         .status(404)
         .send({ message: "Usuario o contraseña incorrectos" });
     }
+    console.log("pass:", password, "pass2:", user.password);
+
     const comparePassword = bcrypt.compareSync(password, user.password);
     if (!comparePassword) {
       return res

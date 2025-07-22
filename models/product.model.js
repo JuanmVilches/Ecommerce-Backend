@@ -6,7 +6,7 @@ const productSchema = new mongoose.Schema({
     required: true,
     trim: true,
     minLength: 3,
-    maxLength: 50,
+    maxLength: 100,
   },
   description: {
     type: String,
@@ -27,7 +27,7 @@ const productSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ["cellphone", "accesory"],
+    enum: ["smartphone", "accesory"],
   },
   createdAt: {
     type: Date,
