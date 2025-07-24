@@ -33,7 +33,12 @@ async function getUserById(req, res) {
 }
 
 async function createUser(req, res) {
+  console.log(req.body);
+
   try {
+    if (req.file) {
+      req.body.image = req.file.filename;
+    }
     const user = new User(req.body);
     if (user.password) {
       user.password = bcrypt.hashSync(user.password, saltRounds);
@@ -102,10 +107,15 @@ async function loginUser(req, res) {
     }
     user.password = undefined;
 
-    const payload = { id: user._id, email: user.email, name: user.name, role: user.role };
+    const payload = {
+      id: user._id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      image: user.image,
+    };
 
     const token = jwt.sign(payload, secret, { expiresIn: '1H' });
-    console.log('Este es el userJson: ', user.toJSON());
 
     return res.status(200).send({ message: 'Inicio de sesión exitoso', user, token });
   } catch (error) {
